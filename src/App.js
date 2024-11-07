@@ -18,10 +18,7 @@ function App() {
     { 
       id: 2, 
       name: 'Board2', 
-      columns: [
-
-        
-      ] 
+      columns: [] 
     }
   ]);
   
@@ -45,11 +42,20 @@ function App() {
     setBoards([...boards]);
   }
 
-
-
-
-
   const currentBoard = boards.find((board) => board.id === currentBoardId);
+
+
+  const removeColumn = (id) => {
+    const updatedBoards = [... boards]
+    updatedBoards.forEach((board) => {
+      if (board.id === currentBoardId){
+        board.columns = board.columns.filter((column) => column.id != id)
+      }
+    });
+    setBoards(updatedBoards);
+  }
+
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
@@ -61,7 +67,6 @@ function App() {
       />
       {currentBoard && <Board  boards={boards} board={currentBoard} />}
       <Card/>
-      
     </div>
 
     </DragDropContext>
