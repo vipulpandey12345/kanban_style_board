@@ -6,7 +6,7 @@ import { CgMathMinus } from "react-icons/cg";
 
 
 
-const Column = ({ column }) => {
+const Column = ({ column, removeColumn }) => {
   return (
     <div className="column">
       <div className="column-header">
@@ -14,7 +14,7 @@ const Column = ({ column }) => {
             <CgMathPlus className="edit-icon" />
         </div>
         <h3>{column.title}</h3>
-        <div className="icon-container">
+        <div className="icon-container" onClick={() => {removeColumn}}>
             <CgMathMinus />
         </div>
       </div>

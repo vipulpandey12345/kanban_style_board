@@ -4,6 +4,7 @@ import './App.css';
 import Board from './components/Board';
 import BoardSelector from './components/BoardSelector';
 import Card from './components/Card';
+import Column from './components/Column';
 
 function App() {
   const [boards, setBoards] = useState([
@@ -65,7 +66,7 @@ function App() {
         boards={boards} 
         setCurrentBoard={setCurrentBoard} 
       />
-      {currentBoard && <Board  boards={boards} board={currentBoard} />}
+      {currentBoard && <Board  boards={boards} board={currentBoard} /> && <Column />}
       <Card/>
     </div>
 
