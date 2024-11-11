@@ -14,7 +14,7 @@ const Column = ({ column, removeColumn }) => {
             <CgMathPlus className="edit-icon" />
         </div>
         <h3>{column.title}</h3>
-        <div className="icon-container" onClick={() => {removeColumn}}>
+        <div className="icon-container" onClick={() => {removeColumn(column.id)}}>
             <CgMathMinus />
         </div>
       </div>

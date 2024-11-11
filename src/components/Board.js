@@ -7,10 +7,15 @@ const Board = ({ board }) => {
     <div className="board">
       <h2>{board.name}</h2>
       <div className="columns-container">
-        {board.columns.map((column) => (
-          <Column key={column.id} column={column} />
-        ))}
-      </div>
+        {board.columns.length > 0 ? (
+          board.columns.map((column) => (
+            <Column key={column.id} column={column} />
+          ))
+        ) : (
+          <p>No columns available</p>
+        )}
+</div>
+
     </div>
   );
 };

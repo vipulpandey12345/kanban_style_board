@@ -19,10 +19,13 @@ function App() {
     { 
       id: 2, 
       name: 'Board2', 
-      columns: [] 
+      columns: [
+        { id: 1, title: 'To Do', tasks: [] }, 
+        { id: 2, title: 'In Progress', tasks: [] }
+      ] 
     }
   ]);
-  
+
   const [currentBoardId, setCurrentBoard] = useState(null);
 
   const onDragEnd = (result) => {
@@ -41,37 +44,46 @@ function App() {
     destColumn.tasks.splice(destination.index, 0, movedTask);
 
     setBoards([...boards]);
-  }
+  };
 
   const currentBoard = boards.find((board) => board.id === currentBoardId);
 
-
   const removeColumn = (id) => {
-    const updatedBoards = [... boards]
+    const updatedBoards = [...boards];
     updatedBoards.forEach((board) => {
-      if (board.id === currentBoardId){
-        board.columns = board.columns.filter((column) => column.id != id)
+      if (board.id === currentBoardId) {
+        board.columns = board.columns.filter((column) => column.id !== id);
       }
     });
     setBoards(updatedBoards);
-  }
-
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="App">
-      <h1>Kanban Board</h1>
-      {/* Pass props correctly */}
-      <BoardSelector 
-        boards={boards} 
-        setCurrentBoard={setCurrentBoard} 
-      />
-      {currentBoard && <Board  boards={boards} board={currentBoard} /> && <Column />}
-      <Card/>
-    </div>
+        <h1>Kanban Board</h1>
 
+        {/* Board Selector */}
+        <BoardSelector 
+          boards={boards} 
+          setCurrentBoard={setCurrentBoard} 
+        />
+
+        {/* Render Columns if currentBoard is selected */}
+        {currentBoard && (
+          <Board 
+            board={currentBoard} 
+            removeColumn={removeColumn}
+          >
+            {currentBoard.columns.map((column) => (
+              <Column key={column.id} column={column} removeColumn={removeColumn} />
+            ))}
+          </Board>
+        )}
+        
+        <Card />
+      </div>
     </DragDropContext>
-    
   );
 }
 
