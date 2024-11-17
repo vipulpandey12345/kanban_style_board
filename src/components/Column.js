@@ -7,6 +7,8 @@ import { CgMathMinus } from "react-icons/cg";
 
 
 const Column = ({ column, removeColumn }) => {
+  console.log('removeColumn:', removeColumn);
+  console.log('column.id:', column.id);
   return (
     <div className="column">
       <div className="column-header">
