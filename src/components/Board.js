@@ -1,21 +1,22 @@
 import React from 'react';
-import Column from './Column';  // Import Column component
+import Column from './Column'; // Import Column component
+import { DragDropContext } from 'react-beautiful-dnd';
 import '../styles/board.css';
 
-const Board = ({ board }) => {
+const Board = ({ board, removeColumn }) => {
   return (
     <div className="board">
       <h2>{board.name}</h2>
       <div className="columns-container">
-        {board.columns.length > 0 ? (
-          board.columns.map((column) => (
-            <Column key={column.id} column={column} />
-          ))
-        ) : (
-          <p>No columns available</p>
-        )}
-</div>
-
+        {/* Loop through the columns in the board */}
+        {board.columns.map((column) => (
+          <Column 
+            key={column.id} 
+            column={column} 
+            removeColumn={removeColumn}  // Pass removeColumn function to Column
+          />
+        ))}
+      </div>
     </div>
   );
 };

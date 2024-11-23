@@ -1,31 +1,41 @@
 import React from 'react';
+import { IoPencil } from 'react-icons/io5';
+import { CgMathPlus, CgMathMinus } from 'react-icons/cg';
+import Card from './Card';  // Import Card component
 import '../styles/column.css';
-import { IoPencil} from "react-icons/io5";
-import { CgMathPlus } from "react-icons/cg";
-import { CgMathMinus } from "react-icons/cg";
-
-
 
 const Column = ({ column, removeColumn }) => {
-  console.log('removeColumn:', removeColumn);
-  console.log('column.id:', column.id);
   return (
     <div className="column">
       <div className="column-header">
         <div className="icon-container">
-            <CgMathPlus className="edit-icon" />
+          <CgMathPlus className="edit-icon" />
         </div>
         <h3>{column.title}</h3>
-        <div className="icon-container" onClick={() => {removeColumn(column.id)}}>
-            <CgMathMinus />
+
+        {/* Icon to remove the column */}
+        <div 
+          className="icon-container" 
+          onClick={() => removeColumn(column.id)}
+        >
+          <CgMathMinus />
         </div>
       </div>
 
-      <ul>
-        {column.tasks.map((task, index) => (
-          <li key={index}>{task}</li>
-        ))}
-      </ul>
+      {/* Render tasks as cards */}
+      <div className="tasks-container">
+        {column.tasks.length > 0 ? (
+          column.tasks.map((task, index) => (
+            <Card 
+              key={task.id} 
+              cardId={task.id} 
+              index={index} 
+            />
+          ))
+        ) : (
+          <p>No tasks available in this column.</p>
+        )}
+      </div>
     </div>
   );
 };
