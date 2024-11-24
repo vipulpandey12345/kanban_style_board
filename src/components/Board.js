@@ -13,7 +13,7 @@ const Board = ({ board, removeColumn }) => {
           <Column 
             key={column.id} 
             column={column} 
-            removeColumn={removeColumn}  // Pass removeColumn function to Column
+            removeColumn={removeColumn}
           />
         ))}
       </div>

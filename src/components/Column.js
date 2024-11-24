@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoPencil } from 'react-icons/io5';
 import { CgMathPlus, CgMathMinus } from 'react-icons/cg';
+import { Droppable } from 'react-beautiful-dnd';  // Import Droppable
 import Card from './Card';  // Import Card component
 import '../styles/column.css';
 
@@ -22,20 +23,30 @@ const Column = ({ column, removeColumn }) => {
         </div>
       </div>
 
-      {/* Render tasks as cards */}
-      <div className="tasks-container">
-        {column.tasks.length > 0 ? (
-          column.tasks.map((task, index) => (
-            <Card 
-              key={task.id} 
-              cardId={task.id} 
-              index={index} 
-            />
-          ))
-        ) : (
-          <p>No tasks available in this column.</p>
+      {/* Use Droppable to make the column a droppable area */}
+      <Droppable droppableId={column.id.toString()}>
+        {(provided) => (
+          <div
+            className="tasks-container"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {column.tasks.length > 0 ? (
+              column.tasks.map((task, index) => (
+                <Card 
+                  key={task.id} 
+                  cardId={task.id} 
+                  index={index}
+                  content={task.content}
+                />
+              ))
+            ) : (
+              <p>No tasks available in this column.</p>
+            )}
+            {provided.placeholder} {/* This is required for proper rendering */}
+          </div>
         )}
-      </div>
+      </Droppable>
     </div>
   );
 };

@@ -83,7 +83,6 @@ function App() {
     setBoards(updatedBoards);
   };
 
-
   const currentBoard = boards.find((board) => board.id === currentBoardId);
 
   return (
@@ -100,8 +99,8 @@ function App() {
         {/* Render Board if currentBoard is selected */}
         {currentBoard ? (
           <Board 
-          board={currentBoard} 
-          
+            board={currentBoard} 
+            removeColumn={removeColumn} // Pass removeColumn function to Board
           />
         ) : (
           <p>Please select a board to view its columns.</p>

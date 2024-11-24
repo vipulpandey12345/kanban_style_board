@@ -40,3 +40,8 @@
 select:invalid {
   color: #aaa;
 }
+
+body {
+  background-color: #FFFBCC; /* Light Yellow */
+  color: #333; /* Dark text for contrast */
+}
