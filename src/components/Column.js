@@ -1,11 +1,18 @@
 import React from 'react';
 import { IoPencil } from 'react-icons/io5';
 import { CgMathPlus, CgMathMinus } from 'react-icons/cg';
-import { Droppable } from 'react-beautiful-dnd';  // Import Droppable
-import Card from './Card';  // Import Card component
+import { Droppable } from 'react-beautiful-dnd'; 
+import Card from './Card';
 import '../styles/column.css';
 
 const Column = ({ column, removeColumn }) => {
+
+  const onClick = () => {
+
+
+
+  };
+
   return (
     <div className="column">
       <div className="column-header">
@@ -52,3 +59,4 @@ const Column = ({ column, removeColumn }) => {
 };
 
 export default Column;
+
