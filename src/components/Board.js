@@ -3,7 +3,7 @@ import Column from './Column'; // Import Column component
 import { DragDropContext } from 'react-beautiful-dnd';
 import '../styles/board.css';
 
-const Board = ({ board, removeColumn }) => {
+const Board = ({ board, removeColumn, addCard }) => {
   return (
     <div className="board">
       <h2>{board.name}</h2>
@@ -14,6 +14,7 @@ const Board = ({ board, removeColumn }) => {
             key={column.id} 
             column={column} 
             removeColumn={removeColumn}
+            addCard={addCard}
           />
         ))}
       </div>

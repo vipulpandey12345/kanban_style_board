@@ -5,23 +5,26 @@ import { Droppable } from 'react-beautiful-dnd';
 import Card from './Card';
 import '../styles/column.css';
 
-const Column = ({ column, removeColumn }) => {
+const Column = ({ column, removeColumn, addCard }) => {
 
-  const onClick = () => {
-
-
-
+  const onClickAdd = () => {
+    const newContent = prompt('Enter new task for content');
+    if (newContent) {
+      addCard(column.id, newContent);
+    }
   };
 
   return (
     <div className="column">
       <div className="column-header">
-        <div className="icon-container">
+        <div 
+          className="icon-container"
+          onClick = {() => onClickAdd(column.id)}
+          
+          >
           <CgMathPlus className="edit-icon" />
         </div>
         <h3>{column.title}</h3>
-
-        {/* Icon to remove the column */}
         <div 
           className="icon-container" 
           onClick={() => removeColumn(column.id)}

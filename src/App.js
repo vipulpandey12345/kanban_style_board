@@ -67,6 +67,12 @@ function App() {
     const sourceColumn = currentBoard.columns.find((col) => col.id === source.droppableId);
     const destColumn = currentBoard.columns.find((col) => col.id === destination.droppableId);
 
+    if (!sourceColumn || !destColumn) {
+      console.error("Source or destination column not found!");
+      return;
+    }
+
+
     const [movedTask] = sourceColumn.tasks.splice(source.index, 1);
     destColumn.tasks.splice(destination.index, 0, movedTask);
 
@@ -82,6 +88,22 @@ function App() {
     });
     setBoards(updatedBoards);
   };
+
+  const addCard = (columnId, newTaskContent) => {
+    const updatedBoards = [...boards];
+    updatedBoards.forEach((board) => {
+      if (board.id === currentBoardId){
+        board.columns.forEach((column) => {
+          if (column.id === columnId){
+            column.tasks.push({ id: uuidv4(), content: newTaskContent });
+            }
+          }
+        )
+      }
+    });
+    setBoards(updatedBoards);
+  };
+
 
   const currentBoard = boards.find((board) => board.id === currentBoardId);
 
@@ -100,7 +122,8 @@ function App() {
         {currentBoard ? (
           <Board 
             board={currentBoard} 
-            removeColumn={removeColumn} // Pass removeColumn function to Board
+            removeColumn={removeColumn}
+            addCard={addCard}
           />
         ) : (
           <p>Please select a board to view its columns.</p>
