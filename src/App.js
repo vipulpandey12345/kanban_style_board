@@ -55,29 +55,60 @@ function App() {
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
-
     if (!destination) return;
-
-    const currentBoard = boards.find((board) => board.id === currentBoardId);
-    if (!currentBoard) {
+  
+    // Find the current board
+    const boardIndex = boards.findIndex((board) => board.id === currentBoardId);
+    if (boardIndex === -1) {
       console.error("No board selected!");
       return;
     }
-
-    const sourceColumn = currentBoard.columns.find((col) => col.id === source.droppableId);
-    const destColumn = currentBoard.columns.find((col) => col.id === destination.droppableId);
-
-    if (!sourceColumn || !destColumn) {
+  
+    const currentBoard = boards[boardIndex];
+  
+    // Find source and destination columns
+    const sourceColumnIndex = currentBoard.columns.findIndex(
+      (col) => col.id === parseInt(source.droppableId)
+    );
+    const destColumnIndex = currentBoard.columns.findIndex(
+      (col) => col.id === parseInt(destination.droppableId)
+    );
+  
+    if (sourceColumnIndex === -1 || destColumnIndex === -1) {
       console.error("Source or destination column not found!");
       return;
     }
-
-
-    const [movedTask] = sourceColumn.tasks.splice(source.index, 1);
-    destColumn.tasks.splice(destination.index, 0, movedTask);
-
-    setBoards([...boards]);
+  
+    const sourceColumn = currentBoard.columns[sourceColumnIndex];
+    const destColumn = currentBoard.columns[destColumnIndex];
+  
+    // Create copies of tasks
+    const sourceTasks = [...sourceColumn.tasks];
+    const destTasks = [...destColumn.tasks];
+  
+    // Remove the task from the source column
+    const [movedTask] = sourceTasks.splice(source.index, 1);
+  
+    // Add the task to the destination column
+    destTasks.splice(destination.index, 0, movedTask);
+  
+    // Update columns immutably
+    const updatedSourceColumn = { ...sourceColumn, tasks: sourceTasks };
+    const updatedDestColumn = { ...destColumn, tasks: destTasks };
+  
+    // Update board columns
+    const updatedColumns = [...currentBoard.columns];
+    updatedColumns[sourceColumnIndex] = updatedSourceColumn;
+    updatedColumns[destColumnIndex] = updatedDestColumn;
+  
+    const updatedBoard = { ...currentBoard, columns: updatedColumns };
+    const updatedBoards = [...boards];
+    updatedBoards[boardIndex] = updatedBoard;
+  
+    // Set the updated boards
+    setBoards(updatedBoards);
   };
+  
 
   const removeColumn = (id) => {
     const updatedBoards = [...boards];
